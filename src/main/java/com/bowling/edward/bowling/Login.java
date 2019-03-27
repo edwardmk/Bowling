@@ -1,5 +1,6 @@
 package com.bowling.edward.bowling;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -52,6 +53,7 @@ public class Login extends AppCompatActivity {
             }
 
         });
+
     }
 
     public void GoToRegister(){
@@ -67,15 +69,12 @@ public class Login extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     FirebaseUser user = mAuth.getCurrentUser();
-                    Intent i = new Intent(Login.this, Homepage.class);
+                    Intent i = new Intent(Login.this, HomePage.class);
                     startActivity(i);
                     finish();
                 }
                 else {
                     Toast.makeText(Login.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(Login.this, Login.class);
-                    startActivity(i);
-                    finish();
                     }
 
                 }

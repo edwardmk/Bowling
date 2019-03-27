@@ -22,12 +22,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Homepage" />
+        <activity android:name=".HomePage" />
         <activity android:name=".Register" />
         <activity android:name=".Game" />
         <activity android:name=".Tournament" />
-        <activity android:name=".Friends" />
         <activity android:name=".Wall" />
+        <activity
+            android:name=".Statistics"
+            android:label="@string/title_activity_statistics"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".FindFriends" />
+        <activity
+            android:name=".AllStats"
+            android:label="@string/title_activity_all_stats"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,14 +15,27 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Register extends AppCompatActivity {
     Button registerButton;
-    EditText fName, sName, pword, email, phone;
+    EditText pword, email, confirmPword, username;
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener firebaseAuthListener;
+//    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+//    DatabaseReference ref = database.getReference("server/saving-data/fireblog");
+
+    FirebaseDatabase mFirebaseDatabase;
+    FirebaseAuth.AuthStateListener mAuthListener;
+    DatabaseReference myRef;
+    static final String TAG = "AddToDatabase";
+    String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,50 +43,67 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         registerButton =  findViewById(R.id.registerButton);
         mAuth = FirebaseAuth.getInstance();
-
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = mFirebaseDatabase.getReference();
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Register();
+                RegisterUser();
             }
         });
-    }
+}
 
-    public void Register() {
-        String rFName, rSName, rPword, rPhone, rEmail;
-        fName = findViewById(R.id.rName);
-        sName = findViewById(R.id.rSName);
-        pword = findViewById(R.id.rPword);
+    public void RegisterUser() {
+        Log.d(TAG, "Submit pressed.");
+        final String rUsername, rPword, rEmail, rConfirmPword;
+
+        username = findViewById(R.id.rUserName);
         email = findViewById(R.id.rEmail);
-        phone = findViewById(R.id.rPhone);
+        pword = findViewById(R.id.rPword);
+        confirmPword = findViewById(R.id.rPword2);
 
-        rFName = fName.getText().toString();
-        rSName = sName.getText().toString();
-        rPword = pword.getText().toString();
-        rPhone = phone.getText().toString();
+
+
+        rUsername = username.getText().toString();
         rEmail = email.getText().toString();
+        rPword = pword.getText().toString();
+        rConfirmPword = confirmPword.getText().toString();
+        if (!rUsername.equals("") && !rEmail.equals("") && !rPword.equals("") && !rConfirmPword.equals("")) {
+            if (rPword.equals(rConfirmPword)) {
+                mAuth.createUserWithEmailAndPassword(rEmail, rPword).addOnCompleteListener(Register.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "Register Unnsuccessful", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Log.d(TAG, " Attempting to submit to database: \n" +
+                                    "username: " + username + "\n" +
+                                    "email: " + email + "\n"
+                            );
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            userID = user.getUid();
 
+                            User userInfo = new User(rUsername, rEmail);
+                            myRef.child("users").child(userID).setValue(userInfo);
 
-
-        Toast.makeText(getApplicationContext(), "Check Database", Toast.LENGTH_SHORT).show();
-        mAuth.createUserWithEmailAndPassword(rEmail, rPword).addOnCompleteListener(Register.this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (!task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "Register Unnsuccessful", Toast.LENGTH_SHORT).show();
-                } else {
-                    String user_id = mAuth.getCurrentUser().getUid();
-                    DatabaseReference current_user_db = FirebaseDatabase.getInstance().getReference().child("users").child(user_id);
-                    current_user_db.setValue(true);
-                    Intent i = new Intent(Register.this, Homepage.class);
-                    startActivity(i);
-                    finish();
-                }
+                            Intent i = new Intent(Register.this, HomePage.class);
+                            startActivity(i);
+                            finish();
+                            toastMessage("Registration Successful.");
+                        }
+                    }
+                });
             }
-        });
+        }
 
+            else {
+            toastMessage("Fill out all the fields");
+        }
+
+        }
+    private void toastMessage(String message){
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
-
 
 
 }

@@ -1,80 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Register"
-    android:background="@drawable/bowlingbackground2">
+    android:orientation="vertical"
+    android:padding="5dp"
+    android:background="@color/background">
 
-    <EditText
-        android:id="@+id/rName"
+    <TextView
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="43dp"
-        android:ems="10"
-        android:hint="Firstname"
-        android:inputType="textPersonName" />
-
-    <EditText
-        android:id="@+id/rSName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/rName"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="-2dp"
-        android:layout_marginTop="120dp"
-        android:ems="10"
-        android:hint="Surname"
-        android:inputType="textPersonName" />
-
-    <EditText
-        android:id="@+id/rPword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/rName"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="-1dp"
-        android:layout_marginTop="280dp"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:textColor="@color/common_google_signin_btn_text_dark_default" />
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:text="Register"
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/rEmail"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/rName"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="3dp"
-        android:layout_marginBottom="327dp"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress" />
 
     <EditText
-        android:id="@+id/rPhone"
-        android:layout_width="wrap_content"
+        android:id="@+id/rUserName"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/rName"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="160dp"
         android:ems="10"
-        android:hint="Phone number"
-        android:inputType="phone"
-        android:typeface="normal" />
+        android:hint="Username"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/rPword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/rPword2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:ems="10"
+        android:hint="Re-enter password"
+        android:inputType="textPassword" />
 
     <Button
         android:id="@+id/registerButton"
-        android:layout_width="152dp"
-        android:layout_height="58dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="67dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_border"
         android:text="Register"
         android:textSize="24sp" />
-
-</RelativeLayout>
+</LinearLayout>

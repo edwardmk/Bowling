@@ -1,25 +1,18 @@
 package com.bowling.edward.bowling;
 
-public class User {
+public class FriendFinder {
 
 
-    private String email;
-    private String username;
+    public String username, email;
 
-
-    public User(){
+    public FriendFinder(){
 
     }
 
-    public User(String username, String email){
+    public FriendFinder(String username, String email){
         this.username = username;
         this.email = email;
     }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -32,4 +25,7 @@ public class User {
         return email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }
